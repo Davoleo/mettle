@@ -1,8 +1,8 @@
 package net.davoleo.mettle.register;
 
 import net.davoleo.mettle.Mettle;
-import net.davoleo.mettle.core.metal.IMetal;
-import net.davoleo.mettle.core.metal.SimpleMetal;
+import net.davoleo.mettle.api.core.IMetal;
+import net.davoleo.mettle.api.core.SimpleMetal;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -11,10 +11,14 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class CoreMetals {
 
-    public static final DeferredRegister<IMetal> REGISTER = DeferredRegister.create(new ResourceLocation(Mettle.MODID, "metal"), Mettle.MODID);
+    public static final DeferredRegister<IMetal> REGISTER = DeferredRegister.create(new ResourceLocation(Mettle.MODID, "metal_registry"), Mettle.MODID);
+
+    static
+    {
+        REGISTER.makeRegistry(IMetal.class, RegistryBuilder::new);
+    }
 
     public static void init() {
-        REGISTER.makeRegistry(IMetal.class, RegistryBuilder::new);
         REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         Vanilla.init();
     }
@@ -53,7 +57,7 @@ public class CoreMetals {
             2.75F
     ));
 
-    public static final RegistryObject<SimpleMetal> COPPER = REGISTER.register("aluminium", () -> new SimpleMetal(
+    public static final RegistryObject<SimpleMetal> ALUMINIUM = REGISTER.register("aluminium", () -> new SimpleMetal(
             0x00FFFF, //TODO NYI
             530,
             -1F, //TODO NYI

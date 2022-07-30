@@ -1,6 +1,8 @@
 package net.davoleo.mettle.register;
 
+import com.google.common.collect.Lists;
 import net.davoleo.mettle.Mettle;
+import net.davoleo.mettle.block.MettleOreBlock;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -13,22 +15,35 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
+import java.util.LinkedList;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class MettleBlocks {
 
     public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Mettle.MODID);
+    public static LinkedList<BlockEntry<? extends Block>> blocks = Lists.newLinkedList();
 
     public static void init() {
         MettleBlocks.REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
         Ores.init();
+
+        for (BlockEntry<? extends Block> entry : blocks) {
+            MettleItems.registerSimpleBlockItem(entry);
+        }
+
     }
 
     public static final class Ores {
 
-        public static final BlockEntry<Block> TIN_ORE = new BlockEntry<>("tin_ore", () -> BlockBehaviour.Properties.of(Material.STONE), Block::new);
-        public static final BlockEntry<Block> ALUMINIUM_ORE = new BlockEntry<>("aluminium_ore", () -> BlockBehaviour.Properties.of(Material.STONE), Block::new);
+        public static final BlockEntry<Block> TIN_ORE = new BlockEntry<>("tin_ore",
+                () -> BlockBehaviour.Properties.of(Material.STONE),
+                properties -> new MettleOreBlock(properties, CoreMetals.TIN.get())
+        );
+        public static final BlockEntry<Block> ALUMINIUM_ORE = new BlockEntry<>("aluminium_ore",
+                () -> BlockBehaviour.Properties.of(Material.STONE),
+                properties -> new MettleOreBlock(properties, CoreMetals.ALUMINIUM.get())
+        );
 
         public static void init() {}
     }
@@ -46,6 +61,7 @@ public class MettleBlocks {
         {
             this.regEntry = REGISTER.register(name, () -> generator.apply(properties.get()));
             this.properties = properties;
+            blocks.add(this);
         }
 
         public BlockBehaviour.Properties getProperties()

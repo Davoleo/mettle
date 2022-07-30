@@ -3,6 +3,10 @@ package net.davoleo.mettle;
 import com.mojang.logging.LogUtils;
 import net.davoleo.mettle.register.CoreMetals;
 import net.davoleo.mettle.register.MettleBlocks;
+import net.davoleo.mettle.register.MettleItems;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -16,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
+import javax.annotation.Nonnull;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -28,6 +33,15 @@ public class Mettle {
 
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final CreativeModeTab CREATIVE_TAB = new CreativeModeTab(MODID) {
+        @Nonnull
+        @Override
+        public ItemStack makeIcon()
+        {
+            return new ItemStack(Items.COPPER_INGOT);
+        }
+    };
 
     public Mettle()
     {
@@ -43,6 +57,7 @@ public class Mettle {
 
         CoreMetals.init();
         MettleBlocks.init();
+        MettleItems.init();
     }
 
     private void setup(final FMLCommonSetupEvent event)
