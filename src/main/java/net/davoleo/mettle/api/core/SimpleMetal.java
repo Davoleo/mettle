@@ -1,6 +1,5 @@
-package net.davoleo.mettle.core.metal;
+package net.davoleo.mettle.api.core;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public final class SimpleMetal extends ForgeRegistryEntry<IMetal> implements IMetal {

@@ -1,4 +1,4 @@
-package net.davoleo.mettle.core.metal;
+package net.davoleo.mettle.api.core;
 
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
