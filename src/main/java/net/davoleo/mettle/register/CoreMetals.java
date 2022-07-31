@@ -48,8 +48,15 @@ public class CoreMetals {
 
         public static void init() {}
     }
-
     public static final RegistryObject<SimpleMetal> TIN = REGISTER.register("tin", () -> new SimpleMetal(
+            0x00FFFF, //TODO NYI
+            530,
+            -1F, //TODO NYI
+            7.3F, -1F, //TODO NYI
+            1.5F
+    ));
+
+    public static final RegistryObject<SimpleMetal> ALUMINIUM = REGISTER.register("aluminium", () -> new SimpleMetal(
             0x00FFFF, //TODO NYI
             960,
             -1F, //TODO NYI
@@ -57,11 +64,4 @@ public class CoreMetals {
             2.75F
     ));
 
-    public static final RegistryObject<SimpleMetal> ALUMINIUM = REGISTER.register("aluminium", () -> new SimpleMetal(
-            0x00FFFF, //TODO NYI
-            530,
-            -1F, //TODO NYI
-            7.0F, -1F, //TODO NYI
-            1.5F
-    ));
 }
