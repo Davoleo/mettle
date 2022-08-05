@@ -1,6 +1,8 @@
 package net.davoleo.mettle;
 
 import com.mojang.logging.LogUtils;
+import net.davoleo.mettle.api.capability.IMetalMixture;
+import net.davoleo.mettle.capability.CapabilityInitializer;
 import net.davoleo.mettle.register.CoreMetals;
 import net.davoleo.mettle.register.MettleBlocks;
 import net.davoleo.mettle.register.MettleItems;
@@ -9,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -54,6 +57,8 @@ public class Mettle {
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(CapabilityInitializer.class);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(CapabilityInitializer::registerCapabilities);
 
         CoreMetals.init();
         MettleBlocks.init();

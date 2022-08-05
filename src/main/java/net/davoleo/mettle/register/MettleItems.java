@@ -2,8 +2,7 @@ package net.davoleo.mettle.register;
 
 import net.davoleo.mettle.Mettle;
 import net.davoleo.mettle.api.core.IMetal;
-import net.davoleo.mettle.api.core.SimpleMetal;
-import net.minecraft.resources.ResourceLocation;
+import net.davoleo.mettle.item.MetalWorkpiece;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -21,18 +20,11 @@ public class MettleItems {
 
     public static final Map<IMetal, RegistryObject<Item>> ORE_CHUNKS = new HashMap<>();
 
+    public static final RegistryObject<Item> METAL_WORKPIECE = REGISTER.register("metal_workpiece", MetalWorkpiece::new);
+
     public static void init() {
         REGISTER.register(FMLJavaModLoadingContext.get().getModEventBus());
 
-        for(RegistryObject<IMetal> metalObj : CoreMetals.REGISTER.getEntries())
-        {
-            IMetal metal = metalObj.get();
-            if (CoreMetals.Vanilla.IRON.get() != metal &&
-                    CoreMetals.Vanilla.COPPER.get() != metal &&
-                    CoreMetals.Vanilla.GOLD.get() != metal) {
-                registerSimpleItem(metalObj.getId().getPath());
-            }
-        }
     }
 
     private static void registerSimpleItem(String name)

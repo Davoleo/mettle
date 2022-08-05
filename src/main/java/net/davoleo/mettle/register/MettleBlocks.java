@@ -36,14 +36,14 @@ public class MettleBlocks {
 
     public static final class Ores {
 
-        public static final BlockEntry<Block> TIN_ORE = new BlockEntry<>("tin_ore",
-                () -> BlockBehaviour.Properties.of(Material.STONE),
-                properties -> new MettleOreBlock(properties, CoreMetals.TIN.get())
-        );
-        public static final BlockEntry<Block> ALUMINIUM_ORE = new BlockEntry<>("aluminium_ore",
-                () -> BlockBehaviour.Properties.of(Material.STONE),
-                properties -> new MettleOreBlock(properties, CoreMetals.ALUMINIUM.get())
-        );
+        //public static final BlockEntry<Block> TIN_ORE = new BlockEntry<>("tin_ore",
+        //        () -> BlockBehaviour.Properties.of(Material.STONE),
+        //        properties -> new MettleOreBlock(properties, CoreMetals.TIN.get())
+        //);
+        //public static final BlockEntry<Block> ALUMINIUM_ORE = new BlockEntry<>("aluminium_ore",
+        //        () -> BlockBehaviour.Properties.of(Material.STONE),
+        //        properties -> new MettleOreBlock(properties, CoreMetals.ALUMINIUM.get())
+        //);
 
         public static void init() {}
     }
