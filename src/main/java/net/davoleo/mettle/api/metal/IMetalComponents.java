@@ -1,4 +1,4 @@
-package net.davoleo.mettle.api.item;
+package net.davoleo.mettle.api.metal;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -20,9 +20,6 @@ public interface IMetalComponents {
 
     @Nullable
     Item getNugget();
-
-    @Nullable
-    Item getGear();
 
     @Nullable
     Item getRod();

@@ -1,6 +1,6 @@
 package net.davoleo.mettle.api.registry;
 
-import net.davoleo.mettle.api.core.IMetal;
+import net.davoleo.mettle.api.metal.IMetal;
 
 public class MetalRegistry extends AbstractRegistry<IMetal> {
 

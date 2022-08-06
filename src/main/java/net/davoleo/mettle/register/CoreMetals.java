@@ -1,8 +1,8 @@
 package net.davoleo.mettle.register;
 
 import net.davoleo.mettle.Mettle;
-import net.davoleo.mettle.api.core.IMetal;
-import net.davoleo.mettle.api.core.SimpleMetal;
+import net.davoleo.mettle.api.metal.IMetal;
+import net.davoleo.mettle.api.metal.SimpleMetal;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;

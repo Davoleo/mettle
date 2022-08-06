@@ -1,7 +1,7 @@
 package net.davoleo.mettle.register;
 
 import net.davoleo.mettle.Mettle;
-import net.davoleo.mettle.api.core.IMetal;
+import net.davoleo.mettle.api.metal.IMetal;
 import net.davoleo.mettle.item.MetalWorkpiece;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

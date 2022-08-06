@@ -1,6 +1,5 @@
 package net.davoleo.mettle.api.registry;
 
-import net.davoleo.mettle.api.item.IMetalComponents;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -10,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public abstract class AbstractRegistry<T> {
 
@@ -34,9 +32,6 @@ public abstract class AbstractRegistry<T> {
 
         Objects.requireNonNull(object, "Object cannot be null");
         Objects.requireNonNull(id, "Object ID cannot be null");
-
-        if(registryMap.containsKey(id))
-            throw new IllegalStateException("Object is already registered!");
 
         if(registryMap.containsKey(id))
             throw new IllegalStateException("Object is already registered!");
