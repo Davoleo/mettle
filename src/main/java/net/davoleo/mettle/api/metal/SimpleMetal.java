@@ -4,18 +4,16 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SimpleMetal implements IMetal {
 
-    private ResourceLocation id;
     private String name;
 
     private int color;
 
     private MetalProperties properties;
 
-    private IMetalComponents components;
+    private MetalComponents components;
 
-    private SimpleMetal(ResourceLocation id, String name, int color, MetalProperties properties, IMetalComponents components)
+    private SimpleMetal(String name, int color, MetalProperties properties, MetalComponents components)
     {
-        this.id = id;
         this.name = name;
         this.color = color;
         this.properties = properties;
@@ -25,13 +23,13 @@ public class SimpleMetal implements IMetal {
     @Override
     public ResourceLocation getId()
     {
-        return id;
+        return new ResourceLocation("mettle", name);
     }
 
     @Override
     public String getName()
     {
-        return name;
+        return "mettle.metal." + name;
     }
 
     @Override
@@ -47,7 +45,7 @@ public class SimpleMetal implements IMetal {
     }
 
     @Override
-    public IMetalComponents getComponents()
+    public MetalComponents getComponents()
     {
         return components;
     }

@@ -7,24 +7,34 @@ import javax.annotation.Nullable;
 
 /**
  * If methods' implementation return null,
- * items and blocks will be created by Mettle,
+ * items and blocks won't be added by Mettle,
  * otherwise the mod's features will be used
  */
-public interface IMetalComponents {
+public class MetalComponents {
 
     @Nullable
-    Block getBlock();
+    Block getBlock() {
+        return null;
+    }
 
     @Nullable
-    Item getIngot();
+    Item getIngot() {
+        return null;
+    }
 
     @Nullable
-    Item getNugget();
+    Item getNugget() {
+        return null;
+    }
 
     @Nullable
-    Item getRod();
+    Item getRod() {
+        return null;
+    }
 
     @Nullable
-    Item getPlate();
+    Item getPlate() {
+        return null;
+    }
 
 }

@@ -12,6 +12,6 @@ public interface IMetal {
 
     MetalProperties getProperties();
 
-    IMetalComponents getComponents();
+    MetalComponents getComponents();
 
 }
