@@ -1,9 +1,9 @@
 package net.davoleo.mettle;
 
 import com.mojang.logging.LogUtils;
-import net.davoleo.mettle.api.capability.IMetalMixture;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.davoleo.mettle.capability.CapabilityInitializer;
-import net.davoleo.mettle.register.CoreMetals;
 import net.davoleo.mettle.register.MettleBlocks;
 import net.davoleo.mettle.register.MettleItems;
 import net.minecraft.world.item.CreativeModeTab;
@@ -11,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -31,11 +30,13 @@ import java.util.stream.Collectors;
 public class Mettle {
 
     public static final String MODID = "mettle";
-    public static final String MODNAME = "Mettle";
+    public static final String MODNAME = MODID;
     public static final String MODVERSION = ModList.get().getModFileById(MODID).versionString();
 
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final NonNullSupplier<Registrate> REGISTRATE = NonNullSupplier.lazy(() -> Registrate.create(MODID));
 
     public static final CreativeModeTab CREATIVE_TAB = new CreativeModeTab(MODID) {
         @Nonnull
@@ -60,7 +61,7 @@ public class Mettle {
         MinecraftForge.EVENT_BUS.register(CapabilityInitializer.class);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(CapabilityInitializer::registerCapabilities);
 
-        CoreMetals.init();
+        //CoreMetals.init();
         MettleBlocks.init();
         MettleItems.init();
     }

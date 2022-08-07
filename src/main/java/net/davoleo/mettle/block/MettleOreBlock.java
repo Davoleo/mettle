@@ -10,6 +10,6 @@ public class MettleOreBlock extends OreBlock {
 
     public MettleOreBlock(Properties props, IMetal metal)
     {
-        super(props.strength(metal.getHardness()));
+        super(props.strength(metal.getProperties().hardness()));
     }
 }

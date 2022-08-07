@@ -1,6 +1,7 @@
 plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
 
@@ -10,6 +11,10 @@ version = '0.1.0'
 java {
     archivesBaseName = 'mettle'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+configurations {
+    shade
 }
 
 minecraft {
@@ -96,10 +101,19 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven { // Registrate
+        url "https://maven.tterrag.com/"
+    }
+    mavenLocal()
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.68'
+
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}" // This should already be here
+
+    def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
+    implementation fg.deobf(registrate)
+    shade registrate
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
@@ -114,6 +128,12 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
+shadowJar {
+    configurations = [project.configurations.shade]
+    relocate 'com.tterrag.registrate', 'net.davoleo.repack.registrate'
+}
+build.dependsOn shadowJar
+
 task apiJar(type: Jar, dependsOn: 'classes') {
     description = "BANANEEEEEEEEEEEEEEEEEEEEE"
     group = 'build'
@@ -122,6 +142,7 @@ task apiJar(type: Jar, dependsOn: 'classes') {
         include('net/davoleo/mettle/api/**')
     }
 }
+build.dependsOn apiJar
 
 // Example for how to get properties into the manifest for reading at runtime.
 jar {
@@ -139,6 +160,10 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
+
+reobf {
+    shadowJar {}
+}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation

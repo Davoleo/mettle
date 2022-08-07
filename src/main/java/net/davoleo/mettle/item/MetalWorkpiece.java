@@ -16,6 +16,7 @@ public class MetalWorkpiece extends Item {
     public MetalWorkpiece()
     {
         super(new Properties().tab(Mettle.CREATIVE_TAB));
+        //setRegistryName("mettle:metal_workpiece");
     }
 
 
