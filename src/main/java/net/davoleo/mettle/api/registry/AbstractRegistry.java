@@ -27,6 +27,10 @@ public abstract class AbstractRegistry<T> {
         registryMap.forEach(consumer);
     }
 
+    public int entriesCount() {
+        return registryMap.size();
+    }
+
     public T register(ResourceLocation id, @Nonnull T object)
     {
 

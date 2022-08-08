@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.davoleo.mettle.capability.CapabilityInitializer;
+import net.davoleo.mettle.register.CoreMetals;
 import net.davoleo.mettle.register.MettleBlocks;
 import net.davoleo.mettle.register.MettleItems;
 import net.minecraft.world.item.CreativeModeTab;
@@ -61,7 +62,9 @@ public class Mettle {
         MinecraftForge.EVENT_BUS.register(CapabilityInitializer.class);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(CapabilityInitializer::registerCapabilities);
 
-        //CoreMetals.init();
+        REGISTRATE.get().creativeModeTab(() -> CREATIVE_TAB);
+
+        CoreMetals.init();
         MettleBlocks.init();
         MettleItems.init();
     }

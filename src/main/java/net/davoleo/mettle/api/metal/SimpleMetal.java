@@ -12,7 +12,7 @@ public class SimpleMetal implements IMetal {
 
     private MetalComponents components;
 
-    private SimpleMetal(String name, int color, MetalProperties properties, MetalComponents components)
+    public SimpleMetal(String name, int color, MetalProperties properties, MetalComponents components)
     {
         this.name = name;
         this.color = color;
