@@ -2,7 +2,6 @@ package net.davoleo.mettle.register;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.davoleo.mettle.api.MettleAPI;
 import net.davoleo.mettle.item.MetalWorkpiece;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -14,9 +13,9 @@ import static net.davoleo.mettle.Mettle.REGISTRATE;
 
 public class MettleItems {
 
-    public static final Map<ResourceLocation, ItemEntry<Item>> ORE_CHUNKS = new HashMap<>(MettleAPI.metalRegistry.entriesCount());
+    public static final Map<ResourceLocation, ItemEntry<Item>> ORE_CHUNKS = new HashMap<>();
     static {
-        MettleAPI.metalRegistry.forEach((id, metal) -> {
+        CoreMetals.LOCAL_METAL_CACHE.forEach((id, metal) -> {
             if (!id.getNamespace().equals("minecraft"))
             {
                 ItemEntry<Item> oreChunk = REGISTRATE.get()

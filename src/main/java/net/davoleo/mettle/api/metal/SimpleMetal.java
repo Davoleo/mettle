@@ -1,10 +1,8 @@
 package net.davoleo.mettle.api.metal;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class SimpleMetal implements IMetal {
-
-    private String name;
+public class SimpleMetal extends ForgeRegistryEntry<IMetal> implements IMetal {
 
     private int color;
 
@@ -12,24 +10,16 @@ public class SimpleMetal implements IMetal {
 
     private MetalComponents components;
 
-    public SimpleMetal(String name, int color, MetalProperties properties, MetalComponents components)
+    public SimpleMetal(int color, MetalProperties properties, MetalComponents components)
     {
-        this.name = name;
         this.color = color;
         this.properties = properties;
         this.components = components;
     }
 
-    @Override
-    public ResourceLocation getId()
-    {
-        return new ResourceLocation("mettle", name);
-    }
-
-    @Override
     public String getName()
     {
-        return "mettle.metal." + name;
+        return "mettle.metal." + getRegistryName().getPath();
     }
 
     @Override

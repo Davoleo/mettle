@@ -6,6 +6,4 @@ import net.minecraftforge.common.util.INBTSerializable;
 public interface IMetalMixture extends INBTSerializable<CompoundTag> {
 
 
-
-
 }

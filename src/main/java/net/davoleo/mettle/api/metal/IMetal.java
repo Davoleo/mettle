@@ -1,12 +1,8 @@
 package net.davoleo.mettle.api.metal;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public interface IMetal {
-
-    ResourceLocation getId();
-
-    String getName();
+public interface IMetal extends IForgeRegistryEntry<IMetal> {
 
     int getColor();
 
