@@ -6,6 +6,9 @@ import net.davoleo.mettle.api.metal.IMetal;
 import net.davoleo.mettle.api.metal.MetalProperties;
 import net.davoleo.mettle.api.metal.SimpleMetal;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -21,9 +24,12 @@ public class CoreMetals {
     public static final DeferredRegister<IMetal> VANILLA_REGISTER = DeferredRegister.create(MettleAPI.METAL_REGISTRY_ID, "minecraft");
 
     public static final Map<ResourceLocation, IMetal> LOCAL_METAL_CACHE = new HashMap<>();
+    public static final Map<ResourceLocation, TagKey<Item>> METAL_TAG = new HashMap<>();
 
     static {
         BASE_REGISTER.makeRegistry(IMetal.class, RegistryBuilder::new);
+
+
 
         //DeferredRegister<IMetal> ITEM = DeferredRegister.create(REGISTRY_ID, Mettle.MODID);
     }
@@ -74,6 +80,7 @@ public class CoreMetals {
     {
         RegistryObject<T> obj = register.register(name, supplier);
         LOCAL_METAL_CACHE.put(obj.getId(), supplier.get());
+        METAL_TAG.put(obj.getId(), ItemTags.create(new ResourceLocation(obj.getId().getNamespace(), obj.getId().getPath() + "_chunk")));
         return obj;
     }
 }
