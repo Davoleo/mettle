@@ -3,6 +3,7 @@ package net.davoleo.mettle.capability;
 import net.davoleo.mettle.api.capability.IMetalMixture;
 import net.davoleo.mettle.api.metal.IMetal;
 import net.davoleo.mettle.api.metal.MetalProperties;
+import net.davoleo.mettle.api.metal.MixtureRatio;
 import net.davoleo.mettle.register.CoreMetals;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -58,5 +59,11 @@ public class MetalMixture implements IMetalMixture {
     {
         banane = nbt.getString("BANANE");
         //nbt.remove("BANANE");
+    }
+
+    @Override
+    public MixtureRatio getRatio()
+    {
+        return null;
     }
 }
