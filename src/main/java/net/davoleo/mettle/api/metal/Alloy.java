@@ -33,7 +33,7 @@ public class Alloy {
         return validRanges.keySet();
     }
 
-    public boolean isAlloyWithRatio(MixtureRatio mixture) {
+    public boolean doesMixtureConform(MixtureRatio mixture) {
         for (String metal : mixture.getMetals())
         {
             if (!validRanges.containsKey(metal))

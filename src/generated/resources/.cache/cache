@@ -1,0 +1,12 @@
+c510691fbf39cd06042a10b9898b408f9f54a205 assets/mettle/blockstates/aluminium_ore.json
+07cb67f4e439eb5b22dfc3ec66785e6e891ccd65 assets/mettle/blockstates/tin_ore.json
+f6db79f43519e731f9daf83b9a373159e87a43b4 assets/mettle/lang/en_ud.json
+5cc6a77a6ad642fa9f6455a0e1b8c0f5f0cdfc84 assets/mettle/lang/en_us.json
+c5b49ddb27271ae6254f6b7a2c02481edb7c36d7 assets/mettle/models/block/aluminium_ore.json
+3e98d23832a9a3bac9042a1e107e4c75c8408686 assets/mettle/models/block/tin_ore.json
+47bc5b78a8c3ae431aea0b79dd3ce925ec6b337e assets/mettle/models/item/aluminium_ore.json
+c206a136a8302f46e4ce42995624606bd3b29136 assets/mettle/models/item/raw_aluminium.json
+5cfbb2443d0adcaf1ca86fb963ee785d8231ff93 assets/mettle/models/item/raw_tin.json
+7d73b77e24a742eae5310c84e7332ebd944bdc1d assets/mettle/models/item/tin_ore.json
+2bfc9993ba6ff3ce804272269b90bac60f456e7b data/mettle/loot_tables/blocks/aluminium_ore.json
+b213d86ee54e4859912321d86f25d45ffecfaf36 data/mettle/loot_tables/blocks/tin_ore.json
