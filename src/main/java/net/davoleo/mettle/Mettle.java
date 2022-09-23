@@ -99,5 +99,7 @@ public class Mettle {
     {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+
+
     }
 }
