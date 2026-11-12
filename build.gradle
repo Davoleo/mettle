@@ -1,56 +1,160 @@
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.5-SNAPSHOT" apply false
+    id "java-library"
+    id "maven-publish"
+    id "net.neoforged.gradle.userdev" version '7.1.38'
 }
 
-architectury {
-    minecraft = rootProject.minecraft_version
+tasks.named('wrapper', Wrapper).configure {
+    // Use this enum value and run wrapper task twice to download Gradle sources
+    // Wrapper.Distribution.Distribution.ALL
+    distributionType = Wrapper.DistributionType.BIN
 }
 
-subprojects {
-    apply plugin: "dev.architectury.loom"
+version = mod_version
+group = mod_group_id
 
-    loom {
-        silentMojangMappingsLicense()
+sourceSets.main.resources {
+    //include generated data resources
+    srcDir('src/generated/resources')
+
+    //exclude dev only resources
+    exclude("**/*.bbmodel") // BlockBench project files
+    exclude("src/generated/**/.cache") // data generator cache
+}
+
+repositories {
+    // dependencies repositories
+}
+
+base {
+    archivesName = mod_id
+}
+
+// Minecraft 1.21.1 ships with Java 21
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+//access transformer examples:
+//minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+//minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
+
+// run configs
+runs {
+    //applies to every run
+    configureEach {
+        // data logging:
+        // "SCAN": mods scan
+        // "REGISTRIES": firing registry events
+        // "REGISTRYDUMP": dumping the content of all registries.
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+
+        // console logging level
+        // https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+        systemProperty 'forge.logging.console.level', 'debug'
+
+        workingDirectory project.layout.projectDirectory.dir('run').dir(name)
+
+        modSource project.sourceSets.main
     }
 
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        // The following line declares the mojmap mappings, you may use other mappings as well
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}@zip")
+    client {
+        //namespaces to load gametests from. [empty means all namespaces]
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        argument '--nogui'
+    }
+
+    // launches GameTestServer runs all registered gametests and exits.
+    // by default server will crash without gametests
+    // the gametest system is also enabled by default for other run configs under the /test command.
+    gameTestServer {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    data {
+        //data-gen
+        // modid used for data-generation, output location of the resulting resource and wher to look for existing resources.
+        arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom(localRuntime)
+}
+
+dependencies {
+    //version of Minecraft to use.
+    // several options depending on the plugin installed. [userdev in this case]
+    // it is possible to also use vanilla plugin [net.neoforged.gradle.vanilla] to use a version of the game without mod-loader.
+
+    implementation "net.neoforged:neoforge:${neo_version}"
+
+    // Example optional mod dependency with JEI
+    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
+    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
+    // compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
+    // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
+    // localRuntime "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
+
+    // Example mod dependency using a mod jar from ./libs with a flat dir repository
+    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
+    // The group id is ignored when searching -- in this case, it is "blank"
+    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
+
+    // Example mod dependency using a file as dependency
+    // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
+
+    // Example project dependency using a sister or child project:
+    // implementation project(":myproject")
+
+    // For more info:
+    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+// this block expands properties to their actual value.
+// missing property => error
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version       : minecraft_version,
+            minecraft_version_range : minecraft_version_range,
+            neo_version             : neo_version,
+            loader_version_range    : loader_version_range,
+            mod_id                  : mod_id,
+            mod_name                : mod_name,
+            mod_license             : mod_license,
+            mod_version             : mod_version,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
         }
-        // The following line declares the yarn mappings you may select this one as well.
-        // mappings "net.fabricmc:yarn:1.18.2+build.4:v2"
     }
-}
-
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
-
-    base {
-        archivesName = rootProject.archives_base_name
-    }
-
-    version = rootProject.mod_version
-    group = rootProject.maven_group
-
     repositories {
         maven {
-            name 'ParchmentMC'
-            url 'https://maven.parchmentmc.org'
+            url "file://${project.projectDir}/repo"
         }
     }
+}
 
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-        options.release = 17
-    }
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' //  charset for Java compilation.
+}
 
-    java {
-        withSourcesJar()
+//IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable this behaviour.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }
